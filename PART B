@@ -1,0 +1,101 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.vehicleauctionsystem2;
+
+/**
+ *
+ * @author user
+ */
+import java.util.Scanner;
+
+public class VehicleAuctionSystem2 {
+
+    public static void main(String[] args) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            int numBidders = 3;
+            
+            
+            Bidder highestBidder = null;
+            
+            System.out.println("--- Bidder Registration ---");
+            for (int i = 1; i <= numBidders; i++) {
+                System.out.print("Enter name for bidder " + i + ": ");
+                String name = scanner.nextLine();
+                System.out.print("Enter bid price for bidder " + i + ": $");
+                double bidPrice = scanner.nextDouble();
+                scanner.nextLine(); // Consume newline
+                
+                Bidder currentBidder = new Bidder();
+                currentBidder.name = name;
+                currentBidder.bidPrice = bidPrice;
+                
+                if (highestBidder == null || currentBidder.bidPrice > highestBidder.bidPrice) {
+                    highestBidder = currentBidder;
+                }
+            }
+            
+            if (highestBidder != null) {
+                System.out.println("\nAuction complete. The highest bidder is " + highestBidder.name + " with a bid of $" + highestBidder.bidPrice);
+            } else {
+                System.out.println("\nNo bidders were processed.");
+                return;
+            }
+            
+            
+            System.out.println("\n--- Vehicle Details & Calculation ---");
+            Vehicle vehicle = new Vehicle();
+            vehicle.soldPrice = highestBidder.bidPrice;
+            
+            System.out.print("Enter vehicle registration number: ");
+            vehicle.registrationNumber = scanner.nextLine();
+            
+            System.out.print("Enter original vehicle cost: $");
+            vehicle.cost = scanner.nextDouble();
+            
+            System.out.print("Enter total expenses incurred on vehicle: $");
+            vehicle.expenses = scanner.nextDouble();
+            
+            System.out.print("Enter total deposits made so far: $");
+            vehicle.depositsMade = scanner.nextDouble();
+            
+            System.out.print("Enter remaining balance left on vehicle: $");
+            vehicle.balanceLeft = scanner.nextDouble();
+            scanner.nextLine(); 
+            
+            
+            System.out.println("\n*** Vehicle Summary ***");
+            System.out.println("Registration Number: " + vehicle.registrationNumber);
+            System.out.println("Original Cost: $" + String.format("%.2f", vehicle.cost));
+            System.out.println("Total Expenses: $" + String.format("%.2f", vehicle.expenses));
+            System.out.println("Total Deposits Made: $" + String.format("%.2f", vehicle.depositsMade));
+            System.out.println("Remaining Balance: $" + String.format("%.2f", vehicle.balanceLeft));
+            System.out.println("Final Sale Price (Highest Bid): $" + String.format("%.2f", vehicle.soldPrice));
+            
+            
+            
+            System.out.print("\nHas the bidder cleared the balance? (yes/no): ");
+            String balanceClearedInput = scanner.nextLine();
+            
+            if (balanceClearedInput.equalsIgnoreCase("yes")) {
+                System.out.println("\nCalculating final profit/loss...");
+                
+                
+                double totalCost = vehicle.cost + vehicle.expenses;
+                double profitLoss = vehicle.soldPrice - totalCost;
+                
+                System.out.println("Total Cost Incurred: $" + String.format("%.2f", totalCost));
+                System.out.println("Total Revenue from Sale: $" + String.format("%.2f", vehicle.soldPrice));
+                
+                if (profitLoss >= 0) {
+                    System.out.println("Result: **Profit of $" + String.format("%.2f", profitLoss) + "**");
+                } else {
+                    System.out.println("Result: **Loss of $" + String.format("%.2f", Math.abs(profitLoss)) + "**");
+                }
+            } else {
+                System.out.println("Cannot compute final profit/loss until balance is cleared.");
+            }
+        }
+    }
+}
