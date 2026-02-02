@@ -1,0 +1,83 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
+/**
+ *
+ * @author user
+ */
+import java.util.Scanner;
+
+public class StudentGrader {
+
+    public static void main(String[] args) {
+        int[] gradeCounts;
+        try (Scanner scanner = new Scanner(System.in)) {
+            int numStudents = 5;
+            int studentCount = 0;
+            gradeCounts = new int[10];
+            System.out.println("Automated Grading System");
+            while (studentCount < numStudents) {
+                System.out.print("Enter score for student " + (studentCount + 1) + " (out of 100): ");
+                int score = scanner.nextInt();
+                
+                
+                if (score < 0 || score > 100) {
+                    System.out.println("Invalid score. Please enter a score between 0 and 100.");
+                    continue; 
+                }
+                
+                int grade = 0;
+                String remark = "";
+                
+                if (score >= 80 && score <= 100) {
+                    grade = 1;
+                    remark = "D1";
+                } else if (score >= 75 && score <= 79) {
+                    grade = 2;
+                    remark = "D2";
+                } else if (score >= 66 && score <= 74) {
+                    grade = 3;
+                    remark = "C3";
+                } else if (score >= 60 && score <= 65) {
+                    grade = 4;
+                    remark = "C4";
+                } else if (score >= 50 && score <= 59) {
+                    grade = 5;
+                    remark = "C5";
+                } else if (score >= 45 && score <= 49) {
+                    grade = 6;
+                    remark = "C6";
+                } else if (score >= 35 && score <= 44) {
+                    grade = 7;
+                    remark = "P7";
+                } else if (score >= 30 && score <= 34) {
+                    grade = 8;
+                    remark = "P8";
+                } else {
+                    grade = 9;
+                    remark = "F";
+                }
+                
+                System.out.println("Score: " + score + ", Grade: " + grade + ", Remark: " + remark);
+                
+                
+                if (grade >= 1 && grade <= 9) {
+                    gradeCounts[grade]++;
+                }
+                
+                studentCount++;
+            }
+        }
+
+        
+        System.out.println("\n--- Grade Summary ---");
+        for (int i = 1; i <= 9; i++) {
+            System.out.println("Grade " + i + ": " + gradeCounts[i] + " student(s)");
+        }
+    }
+}
+
+    
+
